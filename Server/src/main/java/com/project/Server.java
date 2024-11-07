@@ -1,34 +1,20 @@
 package com.project;
 
-import java.lang.reflect.Constructor;
-import static java.lang.System.out;
-
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.InetSocketAddress;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
+import org.java_websocket.WebSocket;
+import org.java_websocket.exceptions.WebsocketNotConnectedException;
+import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
 import org.jline.reader.EndOfFileException;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
 import org.jline.reader.UserInterruptException;
-import org.java_websocket.WebSocket;
-import org.java_websocket.handshake.ClientHandshake;
-
-import java.net.InetSocketAddress;
-import java.net.Socket;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Arrays;
-
-import org.json.JSONArray;
 import org.json.JSONObject;
-import org.java_websocket.exceptions.WebsocketNotConnectedException;
 
 public class Server extends WebSocketServer {
 
@@ -108,10 +94,17 @@ public class Server extends WebSocketServer {
 
     public static String askSystemName() {
         StringBuilder resultat = new StringBuilder();
+        String osName = System.getProperty("os.name").toLowerCase();
         try {
-            ProcessBuilder processBuilder = new ProcessBuilder("uname", "-r");
+            ProcessBuilder processBuilder;
+            if (osName.contains("win")) {
+                // En Windows
+                processBuilder = new ProcessBuilder("cmd.exe", "/c", "ver");
+            } else {
+                // En sistemas Unix/Linux
+                processBuilder = new ProcessBuilder("uname", "-r");
+            }
             Process process = processBuilder.start();
-
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String line;
             while ((line = reader.readLine()) != null) {
@@ -120,7 +113,7 @@ public class Server extends WebSocketServer {
 
             int exitCode = process.waitFor();
             if (exitCode != 0) {
-                return "Error: El procés ha finalitzat amb codi " + exitCode;
+                return "Error: El proceso ha finalizado con código " + exitCode;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -135,7 +128,7 @@ public class Server extends WebSocketServer {
         String systemName = askSystemName();
 
         // WebSockets server
-        Server server = new Server(new InetSocketAddress(3000));
+        Server server = new Server(new InetSocketAddress(80));
         server.start();
         
         LineReader reader = LineReaderBuilder.builder().build();

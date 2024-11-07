@@ -9,15 +9,13 @@ import org.jline.reader.UserInterruptException;
 import org.json.JSONObject;
 
 import javafx.application.Platform;
-import javafx.concurrent.Task;
-import javafx.scene.paint.Color;
 
 public class Client {
 
     public static UtilsWS wsClient;
 
     public static void connectToServer(String host, String port){
-        String protocol = "ws";
+        String protocol = "wss";
         wsClient = UtilsWS.getSharedInstance(protocol + "://" + host + ":" + port);
     
         wsClient.onMessage(Client::wsMessage);
@@ -64,7 +62,7 @@ public class Client {
                     line = line.trim();
     
                     if (line.equalsIgnoreCase("connect")) {
-                        connectToServer("localhost", "3000");
+                        connectToServer("barretina2.ieti.cat", "443");
                         out.println("Connection was succesful.");
                     } else if (line.equalsIgnoreCase("ping")) {
                         JSONObject message = new JSONObject();
