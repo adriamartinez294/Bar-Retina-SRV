@@ -59,6 +59,19 @@ public class Server extends WebSocketServer {
     
             switch (type) {
                 case "ping":
+                    JSONObject msg = new JSONObject();
+                    msg.put("message", "pong");
+                    msg.put("type", "ping");
+                    conn.send(msg.toString());
+                    break;
+                case "bounce":
+                    JSONObject msg1 = new JSONObject();
+
+                    String line = obj.getString("message");
+
+                    msg1.put("message", line);
+                    msg1.put("type", "bounce");
+                    conn.send(msg1.toString());
                     break;
             }
         }
@@ -74,6 +87,23 @@ public class Server extends WebSocketServer {
         System.out.println("WebSocket server started on port: " + getPort());
         setConnectionLostTimeout(0);
         setConnectionLostTimeout(100);
+    }
+
+
+    private void broadcastMessage(String message, WebSocket sender) {
+        for (Map.Entry<WebSocket, String> entry : clients.entrySet()) {
+            WebSocket conn = entry.getKey();
+            if (conn != sender) {
+                try {
+                    conn.send(message);
+                } catch (WebsocketNotConnectedException e) {
+                    System.out.println("Client " + entry.getValue() + " not connected.");
+                    clients.remove(conn);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     public static String askSystemName() {
