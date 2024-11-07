@@ -1,8 +1,10 @@
 package com.server;
 
 import java.io.BufferedReader;
+import java.io.Console;
 import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -19,6 +21,8 @@ import org.json.JSONObject;
 public class Server extends WebSocketServer {
 
     private Map<WebSocket, String> clients;
+
+    private HashMap<> productes;
 
     public Server(InetSocketAddress address) {
         super(address);
