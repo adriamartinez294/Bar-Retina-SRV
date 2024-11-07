@@ -1,4 +1,4 @@
-com\project\UtilsWS.class
-com\project\Server.class
-com\project\UtilsWS$1.class
-com\project\Client.class
+com/project/UtilsWS.class
+com/server/Server.class
+com/project/Client.class
+com/project/UtilsWS$1.class
