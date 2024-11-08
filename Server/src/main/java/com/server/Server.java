@@ -1,10 +1,13 @@
 package com.server;
 
+import static java.lang.System.out;
+
 import java.io.BufferedReader;
 import java.io.Console;
 import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -21,6 +24,7 @@ import org.json.JSONObject;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -32,149 +36,243 @@ public class Server extends WebSocketServer {
 
     private Map<WebSocket, String> clients;
 
-    private ArrayList<Element> productes;
+    private static ArrayList<Element> productes;
 
-    public Server(InetSocketAddress address) {
-        super(address);
-        clients = new ConcurrentHashMap<>();
-    }
-
-    public void readXml(Document doc) {
-        // Crea una factoria de constructors de documents
-        try {
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-
-            // Crea un constructor de documents
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-
-            // Analitza el fitxer XML
-            doc = dBuilder.parse(file);
-
-            // Normalitza l'element arrel del document
-            doc.getDocumentElement().normalize();
-
-            // Obté una llista de tots els elements "student" del document
-            NodeList listStudents = doc.getElementsByTagName("student");
-
-            // Imprimeix el número d'estudiants
-            System.out.println("Número d'estudiants: " + listStudents.getLength());
-        } catch(Exception e) {
-            // Imprimeix la pila d'errors en cas d'excepció
-            e.printStackTrace();
-        }  
-
-    }
-
-    @Override
-    public void onOpen(WebSocket conn, ClientHandshake handshake) {
-        System.out.println("WebSocket client connected: " + conn);
-    }
-
-    @Override
-    public void onClose(WebSocket conn, int code, String reason, boolean remote) {
-        System.out.println("WebSocket client disconnected: " + conn);
-    }
-
-    @Override
-    public void onMessage(WebSocket conn, String message) {
-        JSONObject obj = new JSONObject(message);
+    private static ArrayList<String> tags = new ArrayList<>(Arrays.asList(
+    "cold",
+    "soda",
+    "zero",
+    "caffeine-free",
+    "water",
+    "sparkling water",
+    "beer",
+    "alcohol-free",
+    "baguette",
+    "meat",
+    "cheese",
+    "seafood",
+    "poultry",
+    "vegetarian",
+    "sandwich",
+    "mixed",
+    "burger",
+    "main",
+    "fish",
+    "potato",
+    "tapas",
+    "egg"
+    ));
     
-        
-        if (obj.has("type")) {
-            String type = obj.getString("type");
-    
-            switch (type) {
-                case "ping":
-                    JSONObject msg = new JSONObject();
-                    msg.put("message", "pong");
-                    msg.put("type", "ping");
-                    conn.send(msg.toString());
-                    break;
-                case "bounce":
-                    JSONObject msg1 = new JSONObject();
-
-                    String line = obj.getString("message");
-
-                    msg1.put("message", line);
-                    msg1.put("type", "bounce");
-                    conn.send(msg1.toString());
-                    break;
-            }
+        public Server(InetSocketAddress address) {
+            super(address);
+            clients = new ConcurrentHashMap<>();
+            productes = new ArrayList<>();
         }
-    }
+    
+        public static void readXml(File xml) {
+                    // Crea una factoria de constructors de documents
+                    try {
+                        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            
+                        // Crea un constructor de documents
+                        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            
+                        // Analitza el fitxer XML
+                        Document doc = dBuilder.parse(xml);
+            
+                        // Normalitza l'element arrel del document
+                        doc.getDocumentElement().normalize();
+            
+                        // Obté una llista de tots els elements "student" del document
+                        NodeList arrayProducts = doc.getElementsByTagName("product");
+        
+                    System.out.println("Products: " + arrayProducts.getLength());
+    
+                    for (int cnt = 0; cnt < arrayProducts.getLength(); cnt++) {
+                        // Obté l'estudiant actual
+                        Node nodeProduct = arrayProducts.item(cnt);
+                        // Comprova si l'estudiant actual és un element
+                        if (nodeProduct.getNodeType() == Node.ELEMENT_NODE) {
+                            // Converteix l'estudiant actual a un element
+                            Element elm = (Element) nodeProduct;
+                            productes.add(elm);  
+                        }
+                    }
+                
+                    System.out.println(productes);
+                
 
-    @Override
-    public void onError(WebSocket conn, Exception ex) {
-        ex.printStackTrace();
-    }
+                    } catch(Exception e) {
+                        // Imprimeix la pila d'errors en cas d'excepció
+                        e.printStackTrace();
+                    }  
+    
+        }
+    
+        @Override
+        public void onOpen(WebSocket conn, ClientHandshake handshake) {
+            System.out.println("WebSocket client connected: " + conn);
+        }
+    
+        @Override
+        public void onClose(WebSocket conn, int code, String reason, boolean remote) {
+            System.out.println("WebSocket client disconnected: " + conn);
+        }
+    
+        @Override
+        public void onMessage(WebSocket conn, String message) {
+            JSONObject obj = new JSONObject(message);
+        
+            
+            if (obj.has("type")) {
+                String type = obj.getString("type");
+        
+                switch (type) {
+                    case "ping":
+                        JSONObject msg = new JSONObject();
+                        msg.put("message", "pong");
+                        msg.put("type", "ping");
+                        conn.send(msg.toString());
+                        break;
+                    case "bounce":
+                        JSONObject msg1 = new JSONObject();
+    
+                        String line = obj.getString("message");
+    
+                        msg1.put("message", line);
+                        msg1.put("type", "bounce");
+                        conn.send(msg1.toString());
+                        break;
+                    case "products":
+                        JSONObject msg2 = new JSONObject();
 
-    @Override
-    public void onStart() {
-        System.out.println("WebSocket server started on port: " + getPort());
-        setConnectionLostTimeout(0);
-        setConnectionLostTimeout(100);
-    }
+                        String products = printProducts();
 
+                        msg2.put("message", products);
+                        msg2.put("type", "products");
 
-    private void broadcastMessage(String message, WebSocket sender) {
-        for (Map.Entry<WebSocket, String> entry : clients.entrySet()) {
-            WebSocket conn = entry.getKey();
-            if (conn != sender) {
-                try {
-                    conn.send(message);
-                } catch (WebsocketNotConnectedException e) {
-                    System.out.println("Client " + entry.getValue() + " not connected.");
-                    clients.remove(conn);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                        conn.send(msg2.toString());
+                        break;
+                    case "tags":
+                        JSONObject msg3 = new JSONObject();
+
+                        String tags = printTags();
+
+                        msg3.put("message", tags);
+                        msg3.put("type", "tags");
+
+                        conn.send(msg3.toString());
+                        break;
                 }
             }
         }
-    }
-
-    public static String askSystemName() {
-        StringBuilder resultat = new StringBuilder();
-        String osName = System.getProperty("os.name").toLowerCase();
-        try {
-            ProcessBuilder processBuilder;
-            if (osName.contains("win")) {
-                // En Windows
-                processBuilder = new ProcessBuilder("cmd.exe", "/c", "ver");
-            } else {
-                // En sistemas Unix/Linux
-                processBuilder = new ProcessBuilder("uname", "-r");
-            }
-            Process process = processBuilder.start();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                resultat.append(line).append("\n");
-            }
-
-            int exitCode = process.waitFor();
-            if (exitCode != 0) {
-                return "Error: El proceso ha finalizado con código " + exitCode;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "Error: " + e.getMessage();
-        }
-        return resultat.toString().trim();
-    }
-
-
-    public static void main(String[] args) {
-        String systemName = askSystemName();
     
-        // WebSockets server
-        Server server = new Server(new InetSocketAddress(3000));
-        server.start();
+        @Override
+        public void onError(WebSocket conn, Exception ex) {
+            ex.printStackTrace();
+        }
+    
+        @Override
+        public void onStart() {
+            System.out.println("WebSocket server started on port: " + getPort());
+            setConnectionLostTimeout(0);
+            setConnectionLostTimeout(100);
+        }
+    
+    
+        private void broadcastMessage(String message, WebSocket sender) {
+            for (Map.Entry<WebSocket, String> entry : clients.entrySet()) {
+                WebSocket conn = entry.getKey();
+                if (conn != sender) {
+                    try {
+                        conn.send(message);
+                    } catch (WebsocketNotConnectedException e) {
+                        System.out.println("Client " + entry.getValue() + " not connected.");
+                        clients.remove(conn);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
 
-        String userDir = System.getProperty("user.dir");
-        File dataDir = new File(userDir, "data" + File.separator + "productes.xml");
+        private static String printProducts() {
 
-        PR130Main app = new PR130Main(dataDir);
-        app.processarFitxerXML("persones.xml");
+            StringBuilder output = new StringBuilder();
+
+            for (Element producte : productes) {
+                String id = producte.getAttribute("id");
+                String tags = producte.getAttribute("tags");
+                NodeList nodeList0 = producte.getElementsByTagName("name");
+                String name = nodeList0.item(0).getTextContent();
+                NodeList nodeList1 = producte.getElementsByTagName("description");
+                String description = nodeList1.item(0).getTextContent();
+                NodeList nodeList2 = producte.getElementsByTagName("price");
+                String price = nodeList2.item(0).getTextContent();
+                NodeList nodeList3 = producte.getElementsByTagName("image");
+                String image = nodeList3.item(0).getTextContent();
+
+
+                output.append("Product ID: " + id + " | Name: " + name + " | Description: " + description + " | Price: " + price + " | Image: " + image + " | Tags: [" + tags + "]\n" );
+            }
+
+            return output.toString();
+        }
+
+        private static String printTags() {
+            StringBuilder output = new StringBuilder();
+
+            output.append("Tags: \n");
+
+            for (String tag : tags) {
+                output.append(tag + "\n");
+            }
+
+            return output.toString();
+        }
+    
+        public static String askSystemName() {
+            StringBuilder resultat = new StringBuilder();
+            String osName = System.getProperty("os.name").toLowerCase();
+            try {
+                ProcessBuilder processBuilder;
+                if (osName.contains("win")) {
+                    // En Windows
+                    processBuilder = new ProcessBuilder("cmd.exe", "/c", "ver");
+                } else {
+                    // En sistemas Unix/Linux
+                    processBuilder = new ProcessBuilder("uname", "-r");
+                }
+                Process process = processBuilder.start();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    resultat.append(line).append("\n");
+                }
+    
+                int exitCode = process.waitFor();
+                if (exitCode != 0) {
+                    return "Error: El proceso ha finalizado con código " + exitCode;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "Error: " + e.getMessage();
+            }
+            return resultat.toString().trim();
+        }
+    
+    
+        public static void main(String[] args) {
+            String systemName = askSystemName();
+        
+            // WebSockets server
+            Server server = new Server(new InetSocketAddress(3000));
+            server.start();
+    
+            String userDir = System.getProperty("user.dir");
+            File xml = new File(userDir, "data/products.xml");
+    
+            readXml(xml);
     
         // Verificar si hay un terminal disponible
         Console console = System.console();

@@ -33,6 +33,14 @@ public class Client {
                     String msg = msgObj.getString("message");
                     out.println(msg);
                     break;
+                case "products":
+                    String products = msgObj.getString("message");
+                    System.out.println(products);
+                    break;
+                case "tags":
+                    String tags = msgObj.getString("message");
+                    System.out.println(tags);
+                    break;
             }
         }
     
@@ -62,14 +70,20 @@ public class Client {
                     line = line.trim();
     
                     if (line.equalsIgnoreCase("connect")) {
-                        connectToServer("barretina2.ieti.cat", "3000");
+                        connectToServer("localhost", "3000");
                         out.println("Connection was succesful.");
-                    } else if (line.equalsIgnoreCase("ping")) {
+                    } else if (line.equalsIgnoreCase("products")) {
                         JSONObject message = new JSONObject();
-                        message.put("type", "ping");
-                        message.put("message", "ping");
+                        message.put("type", "products");
+                        message.put("message", "products");
 
                         wsClient.safeSend(message.toString());
+                    } else if (line.equalsIgnoreCase("tags")) {
+                        JSONObject message = new JSONObject();
+                        message.put("type", "tags");
+                        message.put("message", "tags");
+
+                        wsClient.safeSend(message.toString()); 
                     } else if (line.equalsIgnoreCase("exit")) {
                         System.exit(0);
                     } else {
