@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.Console;
 import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -18,15 +19,50 @@ import org.jline.reader.LineReaderBuilder;
 import org.jline.reader.UserInterruptException;
 import org.json.JSONObject;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.File;
+import java.io.InputStream;
+
 public class Server extends WebSocketServer {
 
     private Map<WebSocket, String> clients;
 
-    private HashMap<> productes;
+    private ArrayList<Element> productes;
 
     public Server(InetSocketAddress address) {
         super(address);
         clients = new ConcurrentHashMap<>();
+    }
+
+    public void readXml(Document doc) {
+        // Crea una factoria de constructors de documents
+        try {
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+
+            // Crea un constructor de documents
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+
+            // Analitza el fitxer XML
+            doc = dBuilder.parse(file);
+
+            // Normalitza l'element arrel del document
+            doc.getDocumentElement().normalize();
+
+            // Obté una llista de tots els elements "student" del document
+            NodeList listStudents = doc.getElementsByTagName("student");
+
+            // Imprimeix el número d'estudiants
+            System.out.println("Número d'estudiants: " + listStudents.getLength());
+        } catch(Exception e) {
+            // Imprimeix la pila d'errors en cas d'excepció
+            e.printStackTrace();
+        }  
+
     }
 
     @Override
@@ -133,6 +169,12 @@ public class Server extends WebSocketServer {
         // WebSockets server
         Server server = new Server(new InetSocketAddress(3000));
         server.start();
+
+        String userDir = System.getProperty("user.dir");
+        File dataDir = new File(userDir, "data" + File.separator + "productes.xml");
+
+        PR130Main app = new PR130Main(dataDir);
+        app.processarFitxerXML("persones.xml");
     
         // Verificar si hay un terminal disponible
         Console console = System.console();
@@ -173,8 +215,6 @@ public class Server extends WebSocketServer {
         } else {
             // Modo no interactivo (por ejemplo, cuando se usa nohup)
             System.out.println("Server running in non-interactive mode.");
-            // Aquí el servidor seguirá corriendo indefinidamente.
-            // Podrías agregar alguna otra forma de detenerlo, como un comando o señal externa.
         }
     }
 }
