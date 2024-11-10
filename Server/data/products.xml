@@ -1,116 +1,116 @@
   <!-- 40 productos en total -->
 <products>
   <!-- Bebidas -->
-    <product id="drink001" tags="cold, soda"> 
+    <product id="drink001" tags=" soda"> 
         <name>Coca-Cola</name> 
         <price>2.10</price> 
         <description>Classic cola-flavored soda</description> 
         <image>drink001.jpg</image> 
     </product>
-    <product id="drink002" tags="cold, soda"> 
+    <product id="drink002" tags=" soda"> 
         <name>Fanta Lemon</name> 
         <price>2.10</price> 
         <description>Lemon-flavored soda</description> 
         <image>drink002.jpg</image> 
     </product>
-    <product id="drink003" tags="cold, soda"> 
+    <product id="drink003" tags=" soda"> 
         <name>Fanta Orange</name> 
         <price>2.10</price> 
         <description>Orange-flavored soda</description> 
         <image>drink003.jpg</image> 
     </product>
-    <product id="drink004" tags="cold, soda, zero"> 
+    <product id="drink004" tags="soda, zero-sugar"> 
         <name>Coca-Cola Zero</name> 
         <price>2.10</price> 
         <description>Sugar-free Coca-Cola</description> 
         <image>drink004.jpg</image> 
     </product>
-    <product id="drink005" tags="cold, soda, zero, caffeine-free"> 
+    <product id="drink005" tags="soda, zero-sugar, caffeine-free"> 
         <name>Coca-Cola Zero Zero</name> 
         <price>2.10</price> 
         <description>Sugar-free and caffeine-free Coca-Cola</description> 
         <image>drink005.jpg</image> 
     </product>
-    <product id="drink006" tags="cold, water"> 
+    <product id="drink006" tags="water,non-carbonated"> 
         <name>Mineral Water</name> 
         <price>1.50</price> 
         <description>Natural mineral water</description> 
         <image>drink006.jpg</image> 
     </product>
-    <product id="drink007" tags="cold, sparkling water"> 
+    <product id="drink007" tags="sparkling water"> 
         <name>Sparkling Water</name> 
         <price>1.70</price> 
         <description>Refreshing sparkling water</description> 
         <image>drink007.jpg</image> 
     </product>
-    <product id="drink008" tags="cold, soda"> 
+    <product id="drink008" tags="soda,non-carbonated"> 
         <name>Trina Orange</name> 
         <price>2.10</price> 
-        <description>Orange juice soda without added sugars</description> 
+        <description>Orange juice soda non-carbonated</description> 
         <image>drink008.jpg</image> 
     </product>
-    <product id="drink009" tags="cold, soda"> 
+    <product id="drink009" tags="soda,non-carbonated"> 
         <name>Trina Lemon</name> 
         <price>2.10</price> 
-        <description>Lemon juice soda without added sugars</description> 
+        <description>Lemon juice soda non-carbonated</description> 
         <image>drink009.jpg</image> 
     </product>
-    <product id="drink010" tags="cold, soda"> 
+    <product id="drink010" tags="isotonic,non-carbonated"> 
         <name>Aquarius Lemon</name> 
         <price>2.10</price> 
         <description>Lemon-flavored isotonic drink</description> 
         <image>drink010.jpg</image> 
     </product>
-    <product id="drink011" tags="cold, soda"> 
+    <product id="drink011" tags="isotonic,non-carbonated"> 
         <name>Aquarius Orange</name> 
         <price>2.10</price> 
         <description>Orange-flavored isotonic drink</description> 
         <image>drink011.jpg</image> 
     </product>
-    <product id="drink012" tags="cold, beer"> 
+    <product id="drink012" tags=" beer"> 
         <name>Estrella Damm</name> 
         <price>3.00</price> 
         <description>Classic Spanish lager beer</description> 
         <image>drink012.jpg</image> 
     </product>
-    <product id="drink013" tags="cold, beer"> 
+    <product id="drink013" tags=" beer"> 
         <name>Estrella Galicia</name> 
         <price>3.00</price> 
         <description>Popular Galician lager beer</description> 
         <image>drink013.jpg</image> 
     </product>
-    <product id="drink014" tags="cold, beer, alcohol-free"> 
+    <product id="drink014" tags=" beer, alcohol-free"> 
         <name>FreeDamm</name> 
         <price>2.50</price> 
         <description>Non-alcoholic beer</description> 
         <image>drink014.jpg</image> 
     </product>
-    <product id="drink015" tags="cold, beer, alcohol-free"> 
+    <product id="drink015" tags=" beer, alcohol-free"> 
         <name>FreeDamm Toasted</name> 
         <price>2.70</price> 
         <description>Non-alcoholic toasted beer</description> 
         <image>drink015.jpg</image> 
     </product>
-    <product id="drink016" tags="cold, beer, alcohol-free"> 
+    <product id="drink016" tags=" beer, alcohol-free"> 
         <name>FreeDamm Lemon</name> 
         <price>2.50</price> 
         <description>Non-alcoholic lemon beer</description> 
         <image>drink016.jpg</image> 
     </product>
-    <product id="drink017" tags="cold, beer"> 
+    <product id="drink017" tags=" beer"> 
         <name>Heineken</name> 
         <price>3.00</price> 
         <description>Internationally renowned lager beer</description> 
         <image>drink017.jpg</image> 
     </product>
       <!-- Bocadillos y hamburgesas -->
-    <product id="sandwich001" tags="baguette"> 
+    <product id="sandwich001" tags="baguette, eggs"> 
         <name>French Omelette Baguette</name> 
         <price>6.00</price> 
         <description>French omelette in a fresh baguette</description> 
         <image>sandwich001.jpg</image> 
     </product>
-    <product id="sandwich002" tags="baguette"> 
+    <product id="sandwich002" tags="baguette, eggs"> 
         <name>Spanish Potato Omelette Baguette</name> 
         <price>6.50</price> 
         <description>Spanish potato omelette in a baguette</description> 
@@ -128,13 +128,13 @@
         <description>Crispy bacon in a fresh baguette</description> 
         <image>sandwich004.jpg</image> 
     </product>
-    <product id="sandwich005" tags="baguette, meat"> 
+    <product id="sandwich005" tags="baguette, meat, lactose"> 
         <name>Pork Loin and Cheese Baguette</name> 
         <price>7.50</price> 
         <description>Pork loin with melted cheese in a baguette</description> 
         <image>sandwich005.jpg</image> 
     </product>
-    <product id="sandwich006" tags="baguette, meat, cheese"> 
+    <product id="sandwich006" tags="baguette, meat, lactose"> 
         <name>Bacon and Cheese Baguette</name> 
         <price>7.00</price> 
         <description>Bacon with cheese in a fresh baguette</description> 
@@ -146,7 +146,7 @@
         <description>Sausage in a fresh baguette</description> 
         <image>sandwich007.jpg</image> 
     </product>
-    <product id="sandwich008" tags="baguette, cheese"> 
+    <product id="sandwich008" tags="baguette, lactose"> 
         <name>Cheese Baguette</name> 
         <price>5.50</price> 
         <description>Cheese in a fresh baguette</description> 
@@ -170,7 +170,7 @@
         <description>Tuna with peppers in a fresh baguette</description> 
         <image>sandwich011.jpg</image> 
     </product>
-    <product id="sandwich012" tags="baguette, meat"> 
+    <product id="sandwich012" tags="baguette, meat, spicy"> 
         <name>Chorizo Baguette</name> 
         <price>7.00</price> 
         <description>Spicy chorizo sausage in a fresh baguette</description> 
@@ -188,7 +188,7 @@
         <description>Fresh vegetables in a baguette</description> 
         <image>sandwich014.jpg</image> 
     </product>
-    <product id="sandwich015" tags="sandwich, mixed"> 
+    <product id="sandwich015" tags="sandwich, mixed, lactose"> 
         <name>Mixed Sandwich (Ham and Cheese)</name> 
         <price>5.50</price> 
         <description>Classic ham and cheese sandwich</description> 
@@ -200,13 +200,13 @@
         <description>Grilled chicken with avocado in a sandwich</description> 
         <image>sandwich016.jpg</image> 
     </product>
-    <product id="sandwich017" tags="sandwich, seafood"> 
+    <product id="sandwich017" tags="sandwich, seafood, lactose"> 
         <name>Smoked Salmon and Cream Cheese Sandwich</name> 
         <price>8.00</price> 
         <description>Smoked salmon with cream cheese in a sandwich</description> 
         <image>sandwich017.jpg</image> 
     </product>
-    <product id="burger001" tags="burger"> 
+    <product id="burger001" tags="burger, lactose"> 
         <name>Classic Burger</name> 
         <price>8.00</price> 
         <description>Classic beef burger with lettuce, tomato, and cheese</description> 
@@ -224,19 +224,19 @@
         <description>Fried calamari in a fresh baguette</description> 
         <image>sandwich018.jpg</image> 
     </product>
-    <product id="burger003" tags="burger"> 
+    <product id="burger003" tags="burger, lactose"> 
         <name>Classic Burger (beef, lettuce, tomato, and cheese)</name> 
         <price>8.50</price> 
         <description>Classic beef burger with lettuce, tomato, and cheese</description> 
         <image>burger003.jpg</image> 
     </product>
-    <product id="burger004" tags="burger"> 
+    <product id="burger004" tags="burger, lactose"> 
         <name>Cheeseburger</name> 
         <price>8.00</price> 
         <description>Cheeseburger with beef patty and melted cheese</description> 
         <image>burger004.jpg</image> 
     </product>
-    <product id="burger005" tags="burger, poultry"> 
+    <product id="burger005" tags="burger, poultry,spicy"> 
         <name>Spicy Crispy Chicken Burger</name> 
         <price>9.00</price> 
         <description>Spicy crispy chicken burger with lettuce and sauce</description> 
@@ -248,7 +248,7 @@
         <description>Beef patty with BBQ sauce and crispy onions</description> 
         <image>burger006.jpg</image> 
     </product>
-    <product id="burger007" tags="burger, vegetarian"> 
+    <product id="burger007" tags="burger, vegetarian, lactose"> 
         <name>Vegetarian Burger</name> 
         <price>7.50</price> 
         <description>Vegetarian patty with lettuce, tomato, and cheese</description> 
@@ -375,98 +375,98 @@
         <description>Pork fillet served with green asparagus and gratin potatoes</description> 
         <image>dish020.jpg</image> 
     </product>
-      <!-- Tapas / entrantes -->
-    <product id="starter001" tags="tapas, potato"> 
+      <!-- starter / entrantes -->
+    <product id="starter001" tags="starter, potato,spicy"> 
         <name>Patatas Bravas</name> 
         <price>5.00</price> 
         <description>Crispy fried potatoes with spicy tomato sauce</description> 
         <image>starter001.jpg</image> 
     </product>
-    <product id="starter002" tags="tapas, seafood"> 
+    <product id="starter002" tags="starter, seafood"> 
         <name>Galician-style Octopus</name> 
         <price>8.00</price> 
         <description>Octopus prepared in traditional Galician style with paprika</description> 
         <image>starter002.jpg</image> 
     </product>
-    <product id="starter003" tags="tapas, egg"> 
+    <product id="starter003" tags="starter, egg"> 
         <name>Spanish Potato Omelette</name> 
         <price>6.50</price> 
         <description>Classic Spanish omelette made with potatoes and eggs</description> 
         <image>starter003.jpg</image> 
     </product>
-    <product id="starter004" tags="tapas, meat"> 
+    <product id="starter004" tags="starter, meat"> 
         <name>Pork Rinds</name> 
         <price>4.50</price> 
         <description>Crispy fried pork rinds, a popular Spanish snack</description> 
         <image>starter004.jpg</image> 
     </product>
-    <product id="starter005" tags="tapas, seafood"> 
+    <product id="starter005" tags="starter, seafood"> 
         <name>Andalusian-style Calamari</name> 
         <price>7.50</price> 
         <description>Deep-fried calamari served with a tangy dipping sauce</description> 
         <image>starter005.jpg</image> 
     </product>
-    <product id="starter006" tags="tapas, seafood"> 
+    <product id="starter006" tags="starter, seafood"> 
         <name>Baby Squid</name> 
         <price>7.00</price> 
         <description>Grilled baby squid with a hint of lemon</description> 
         <image>starter006.jpg</image> 
     </product>
-    <product id="starter007" tags="tapas, cheese"> 
+    <product id="starter007" tags="starter, lactose"> 
         <name>Manchego Cheese</name> 
         <price>5.50</price> 
         <description>Traditional Manchego cheese from La Mancha</description> 
         <image>starter007.jpg</image> 
     </product>
-    <product id="starter008" tags="tapas, ham"> 
+    <product id="starter008" tags="starter, ham"> 
         <name>Iberian Ham</name> 
         <price>9.00</price> 
         <description>Finely sliced Iberian ham from Spain</description> 
         <image>starter008.jpg</image> 
     </product>
-    <product id="starter009" tags="tapas, croquette"> 
+    <product id="starter009" tags="starter, croquette, meat"> 
         <name>Ham Croquettes</name> 
         <price>6.00</price> 
         <description>Fried croquettes filled with creamy ham</description> 
         <image>starter009.jpg</image> 
     </product>
-    <product id="starter010" tags="tapas, croquette"> 
+    <product id="starter010" tags="starter, croquette, seafood"> 
         <name>Cod Croquettes</name> 
         <price>6.00</price> 
         <description>Delicious croquettes filled with salt cod</description> 
         <image>starter010.jpg</image> 
     </product>
-    <product id="starter011" tags="tapas, croquette"> 
+    <product id="starter011" tags="starter, croquette, meat"> 
         <name>Chicken Croquettes</name> 
         <price>5.50</price> 
         <description>Crispy croquettes stuffed with tender chicken</description> 
         <image>starter011.jpg</image> 
     </product>
-    <product id="starter012" tags="tapas, seafood"> 
+    <product id="starter012" tags="starter, seafood"> 
         <name>Cuttlefish</name> 
         <price>7.00</price> 
         <description>Grilled cuttlefish served with a fresh lemon wedge</description> 
         <image>starter012.jpg</image> 
     </product>
-    <product id="starter013" tags="tapas, meat"> 
+    <product id="starter013" tags="starter, meat"> 
         <name>Skewers</name> 
         <price>6.50</price> 
         <description>Grilled skewers of seasoned meat</description> 
         <image>starter013.jpg</image> 
     </product>
-    <product id="starter014" tags="tapas, olives"> 
+    <product id="starter014" tags="starter, olives"> 
         <name>Olives</name> 
         <price>3.50</price> 
         <description>Selection of marinated olives</description> 
         <image>starter014.jpg</image> 
     </product>
-    <product id="starter015" tags="tapas, seafood"> 
+    <product id="starter015" tags="starter, seafood"> 
         <name>Snails</name> 
         <price>6.50</price> 
         <description>Spanish-style snails cooked with garlic and herbs</description> 
         <image>starter015.jpg</image> 
     </product>
-    <product id="starter016" tags="tapas, meat"> 
+    <product id="starter016" tags="starter, meat"> 
         <name>Tripe</name> 
         <price>7.00</price> 
         <description>Traditional tripe dish cooked in a rich sauce</description> 

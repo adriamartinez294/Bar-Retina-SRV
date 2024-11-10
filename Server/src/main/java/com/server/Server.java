@@ -38,7 +38,11 @@ public class Server extends WebSocketServer {
 
     private static ArrayList<Element> productes;
 
-    private static ArrayList<String> tags = new ArrayList<>(Arrays.asList("cold", "soda", "zero", "caffeine-free", "water", "sparkling water", "beer", "alcohol-free", "baguette", "meat", "cheese", "seafood", "poultry", "vegetarian", "sandwich", "mixed", "burger", "main", "fish", "potato", "tapas", "egg"));
+    private static ArrayList<String> tags = new ArrayList<>(Arrays.asList("soda", "zero-sugar", "caffeine-free", "water", "non-carbonated", 
+            "sparkling water", "isotonic", "beer", "alcohol-free", "baguette", 
+            "eggs", "meat", "lactose", "seafood", "spicy", "poultry", 
+            "vegetarian", "sandwich", "mixed", "burger", "main", "fish", 
+            "starter", "potato", "egg"));
     
         public Server(InetSocketAddress address) {
             super(address);
