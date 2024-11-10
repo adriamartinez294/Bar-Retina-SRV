@@ -1,4 +1,4 @@
-  <!-- 40 productos en total -->
+  <!-- 77 productos en total -->
 <products>
   <!-- Bebidas -->
     <product id="drink001" tags=" soda"> 
@@ -345,35 +345,23 @@
         <description>Cod served with chickpeas and spinach</description> 
         <image>dish015.jpg</image> 
     </product>
-    <product id="dish016" tags="main, burger"> 
-        <name>Burger with French Fries and Coleslaw</name> 
-        <price>9.50</price> 
-        <description>Classic beef burger with French fries and coleslaw</description> 
-        <image>dish016.jpg</image> 
-    </product>
     <product id="dish017" tags="main, poultry"> 
         <name>Grilled Turkey Breast with Quinoa and Sauteed Vegetables</name> 
         <price>14.50</price> 
         <description>Grilled turkey breast served with quinoa and sauteed vegetables</description> 
-        <image>dish017.jpg</image> 
+        <image>dish016.jpg</image> 
     </product>
     <product id="dish018" tags="main, seafood"> 
         <name>Grilled Calamari with Rice and Aioli</name> 
         <price>13.50</price> 
         <description>Grilled calamari served with rice and aioli sauce</description> 
-        <image>dish018.jpg</image> 
+        <image>dish017.jpg</image> 
     </product>
     <product id="dish019" tags="main, meat"> 
         <name>Lamb Chop with Sauteed Potatoes and Red Peppers</name> 
         <price>16.50</price> 
         <description>Lamb chop served with sauteed potatoes and red peppers</description> 
-        <image>dish019.jpg</image> 
-    </product>
-    <product id="dish020" tags="main, meat"> 
-        <name>Pork Fillet with Green Asparagus and Gratin Potatoes</name> 
-        <price>15.00</price> 
-        <description>Pork fillet served with green asparagus and gratin potatoes</description> 
-        <image>dish020.jpg</image> 
+        <image>dish018.jpg</image> 
     </product>
       <!-- starter / entrantes -->
     <product id="starter001" tags="starter, potato,spicy"> 
@@ -465,12 +453,6 @@
         <price>6.50</price> 
         <description>Spanish-style snails cooked with garlic and herbs</description> 
         <image>starter015.jpg</image> 
-    </product>
-    <product id="starter016" tags="starter, meat"> 
-        <name>Tripe</name> 
-        <price>7.00</price> 
-        <description>Traditional tripe dish cooked in a rich sauce</description> 
-        <image>starter016.jpg</image> 
     </product>
 </products>
 
