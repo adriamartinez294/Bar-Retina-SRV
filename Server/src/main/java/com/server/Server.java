@@ -42,7 +42,7 @@ public class Server extends WebSocketServer {
             "sparkling water", "isotonic", "beer", "alcohol-free", "baguette", 
             "eggs", "meat", "lactose", "seafood", "spicy", "poultry", 
             "vegetarian", "sandwich", "mixed", "burger", "main", "fish", 
-            "starter", "potato", "egg"));
+            "starter", "potato"));
     
         public Server(InetSocketAddress address) {
             super(address);

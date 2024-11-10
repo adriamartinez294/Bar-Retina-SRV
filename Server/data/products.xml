@@ -388,7 +388,7 @@
         <description>Octopus prepared in traditional Galician style with paprika</description> 
         <image>starter002.jpg</image> 
     </product>
-    <product id="starter003" tags="starter, egg"> 
+    <product id="starter003" tags="starter, eggs"> 
         <name>Spanish Potato Omelette</name> 
         <price>6.50</price> 
         <description>Classic Spanish omelette made with potatoes and eggs</description> 
