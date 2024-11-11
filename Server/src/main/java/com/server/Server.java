@@ -203,7 +203,7 @@ public class Server extends WebSocketServer {
         private static String printTags() {
             StringBuilder output = new StringBuilder();
 
-            output.append("Tags: \n");
+//            output.append("Tags: \n");
 
             for (String tag : tags) {
                 output.append(tag + "\n");
