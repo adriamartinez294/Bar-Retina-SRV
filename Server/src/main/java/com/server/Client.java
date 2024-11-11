@@ -15,8 +15,8 @@ public class Client {
     public static UtilsWS wsClient;
 
     public static void connectToServer(String host, String port){
-        String protocol = "ws";
-        wsClient = UtilsWS.getSharedInstance(protocol + "://" + host + ":" + port);
+        String protocol = "wss";
+        wsClient = UtilsWS.getSharedInstance(protocol + "://" + host);
     
         wsClient.onMessage(Client::wsMessage);
         wsClient.onError(Client::wsError);
@@ -70,7 +70,7 @@ public class Client {
                     line = line.trim();
     
                     if (line.equalsIgnoreCase("connect")) {
-                        connectToServer("localhost", "3000");
+                        connectToServer("barretina2.ieti.site", "443");
                         out.println("Connection was succesful.");
                     } else if (line.equalsIgnoreCase("products")) {
                         JSONObject message = new JSONObject();
