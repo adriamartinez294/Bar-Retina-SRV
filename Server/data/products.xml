@@ -1,19 +1,19 @@
   <!-- 77 productos en total -->
 <products>
   <!-- Bebidas -->
-    <product id="drink001" tags=" soda"> 
+    <product id="drink001" tags="soda"> 
         <name>Coca-Cola</name> 
         <price>2.10</price> 
         <description>Classic cola-flavored soda</description> 
         <image>drink001.jpg</image> 
     </product>
-    <product id="drink002" tags=" soda"> 
+    <product id="drink002" tags="soda"> 
         <name>Fanta Lemon</name> 
         <price>2.10</price> 
         <description>Lemon-flavored soda</description> 
         <image>drink002.jpg</image> 
     </product>
-    <product id="drink003" tags=" soda"> 
+    <product id="drink003" tags="soda"> 
         <name>Fanta Orange</name> 
         <price>2.10</price> 
         <description>Orange-flavored soda</description> 
@@ -67,50 +67,50 @@
         <description>Orange-flavored isotonic drink</description> 
         <image>drink011.jpg</image> 
     </product>
-    <product id="drink012" tags=" beer"> 
+    <product id="drink012" tags="beer"> 
         <name>Estrella Damm</name> 
         <price>3.00</price> 
         <description>Classic Spanish lager beer</description> 
         <image>drink012.jpg</image> 
     </product>
-    <product id="drink013" tags=" beer"> 
+    <product id="drink013" tags="beer"> 
         <name>Estrella Galicia</name> 
         <price>3.00</price> 
         <description>Popular Galician lager beer</description> 
         <image>drink013.jpg</image> 
     </product>
-    <product id="drink014" tags=" beer, alcohol-free"> 
+    <product id="drink014" tags="beer, alcohol-free"> 
         <name>FreeDamm</name> 
         <price>2.50</price> 
         <description>Non-alcoholic beer</description> 
         <image>drink014.jpg</image> 
     </product>
-    <product id="drink015" tags=" beer, alcohol-free"> 
+    <product id="drink015" tags="beer, alcohol-free"> 
         <name>FreeDamm Toasted</name> 
         <price>2.70</price> 
         <description>Non-alcoholic toasted beer</description> 
         <image>drink015.jpg</image> 
     </product>
-    <product id="drink016" tags=" beer, alcohol-free"> 
+    <product id="drink016" tags="beer, alcohol-free"> 
         <name>FreeDamm Lemon</name> 
         <price>2.50</price> 
         <description>Non-alcoholic lemon beer</description> 
         <image>drink016.jpg</image> 
     </product>
-    <product id="drink017" tags=" beer"> 
+    <product id="drink017" tags="beer"> 
         <name>Heineken</name> 
         <price>3.00</price> 
         <description>Internationally renowned lager beer</description> 
         <image>drink017.jpg</image> 
     </product>
       <!-- Bocadillos y hamburgesas -->
-    <product id="sandwich001" tags="baguette, eggs"> 
+    <product id="sandwich001" tags="baguette, egg-based"> 
         <name>French Omelette Baguette</name> 
         <price>6.00</price> 
         <description>French omelette in a fresh baguette</description> 
         <image>sandwich001.jpg</image> 
     </product>
-    <product id="sandwich002" tags="baguette, eggs"> 
+    <product id="sandwich002" tags="baguette, egg-based"> 
         <name>Spanish Potato Omelette Baguette</name> 
         <price>6.50</price> 
         <description>Spanish potato omelette in a baguette</description> 
@@ -376,7 +376,7 @@
         <description>Octopus prepared in traditional Galician style with paprika</description> 
         <image>starter002.jpg</image> 
     </product>
-    <product id="starter003" tags="starter, eggs"> 
+    <product id="starter003" tags="starter, egg-based"> 
         <name>Spanish Potato Omelette</name> 
         <price>6.50</price> 
         <description>Classic Spanish omelette made with potatoes and eggs</description> 
@@ -442,7 +442,7 @@
         <description>Grilled skewers of seasoned meat</description> 
         <image>starter013.jpg</image> 
     </product>
-    <product id="starter014" tags="starter, olives"> 
+    <product id="starter014" tags="starter"> 
         <name>Olives</name> 
         <price>3.50</price> 
         <description>Selection of marinated olives</description> 
