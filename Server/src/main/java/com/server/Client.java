@@ -50,7 +50,7 @@ public class Client {
     public static ArrayList<Element> productes = new ArrayList<>();
 
     public static void connectToServer(String host, String port){
-        String protocol = "ws";
+        String protocol = "wss";
         wsClient = UtilsWS.getSharedInstance(protocol + "://" + host + ":" + port);
 
         wsClient.onMessage(Client::wsMessage);
@@ -143,11 +143,17 @@ public class Client {
                 line = line.trim();
 
                 if (line.equalsIgnoreCase("connect")) {
-                    connectToServer("localhost", "3000");
+                    connectToServer("barretina2.ieti.site", "443");
                     out.println("Connection was succesful.");
                 } else if (line.equalsIgnoreCase("products")) {
                     JSONObject message = new JSONObject();
                     message.put("type", "products");
+                    message.put("message", "products");
+
+                    wsClient.safeSend(message.toString());
+                } else if (line.equalsIgnoreCase("ping")) {
+                    JSONObject message = new JSONObject();
+                    message.put("type", "ping");
                     message.put("message", "products");
 
                     wsClient.safeSend(message.toString());
@@ -168,7 +174,7 @@ public class Client {
                 }
             }
         } finally {
-            System.out.println("Server stopped.");
+            System.out.println("Client Stopped.");
         }
     }
 }
