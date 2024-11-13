@@ -27,21 +27,31 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import javax.xml.parsers.DocumentBuilder;
+import org.w3c.dom.*;
+import org.json.JSONObject;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.DocumentBuilder;
+import java.io.StringReader;
+import org.xml.sax.InputSource;
+
 import java.io.File;
-import java.io.InputStream;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import java.io.StringWriter;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.dom.DOMSource;
+import org.w3c.dom.Document;
+
 
 public class Client {
 
     public static UtilsWS wsClient;
-    public static ArrayList<Element> productes;
+    public static ArrayList<Element> productes = new ArrayList<>();
 
     public static void connectToServer(String host, String port){
         String protocol = "ws";
-        wsClient = UtilsWS.getSharedInstance(protocol + "://" + host);
+        wsClient = UtilsWS.getSharedInstance(protocol + "://" + host + ":" + port);
 
         wsClient.onMessage(Client::wsMessage);
         wsClient.onError(Client::wsError);
@@ -59,15 +69,25 @@ public class Client {
                 out.println(msg);
                 break;
             case "products":
-                String products = msgObj.getString("message");
-                System.out.println("Received JSON: " + products);
-                Gson gson = new Gson();
-                Element[] productesArray = gson.fromJson(products, Element[].class);
-                for (Element element : productesArray) {
-                    productes.add(element);
+                String xmlString = msgObj.getString("message");
+
+                try {
+                    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                    DocumentBuilder builder = factory.newDocumentBuilder();
+                    InputSource is = new InputSource(new StringReader(xmlString));
+                    Document document = builder.parse(is);
+
+                    NodeList products = document.getElementsByTagName("product");
+                    for (int i = 0; i < products.getLength(); i++) {
+                        Element product = (Element) products.item(i);
+                        productes.add(product);
+                    }
+
+                    String print = printProducts();
+                    System.out.println(print);
+                } catch (Exception e) {
+                    e.printStackTrace(); // Manejo de las excepciones
                 }
-                String productInfo = printProducts();
-                System.out.println(productInfo);
                 break;
             case "tags":
                 String tags = msgObj.getString("message");

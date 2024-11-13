@@ -22,23 +22,27 @@ import org.jline.reader.LineReaderBuilder;
 import org.jline.reader.UserInterruptException;
 import org.json.JSONObject;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import javax.xml.parsers.DocumentBuilder;
+import org.w3c.dom.*;
+import org.json.JSONObject;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.File;
-import java.io.InputStream;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import javax.xml.parsers.DocumentBuilder;
+import java.io.StringReader;
+import org.xml.sax.InputSource;
 
+import java.io.File;
+import java.io.StringWriter;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.dom.DOMSource;
+import org.w3c.dom.Document;
 
 public class Server extends WebSocketServer {
 
     private Map<WebSocket, String> clients;
 
+    public static Document productesXml;
     private static ArrayList<Element> productes;
 
     private static ArrayList<String> tags = new ArrayList<>(Arrays.asList("soda", "zero-sugar", "caffeine-free", "water", "non-carbonated", 
@@ -52,46 +56,39 @@ public class Server extends WebSocketServer {
             clients = new ConcurrentHashMap<>();
             productes = new ArrayList<>();
         }
-    
-        public static void readXml(File xml) {
-                    // Crea una factoria de constructors de documents
-                    try {
-                        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            
-                        // Crea un constructor de documents
-                        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            
-                        // Analitza el fitxer XML
-                        Document doc = dBuilder.parse(xml);
-            
-                        // Normalitza l'element arrel del document
-                        doc.getDocumentElement().normalize();
-            
-                        // Obté una llista de tots els elements "student" del document
-                        NodeList arrayProducts = doc.getElementsByTagName("product");
-        
-                    System.out.println("Products: " + arrayProducts.getLength());
-    
-                    for (int cnt = 0; cnt < arrayProducts.getLength(); cnt++) {
-                        // Obté l'estudiant actual
-                        Node nodeProduct = arrayProducts.item(cnt);
-                        // Comprova si l'estudiant actual és un element
-                        if (nodeProduct.getNodeType() == Node.ELEMENT_NODE) {
-                            // Converteix l'estudiant actual a un element
-                            Element elm = (Element) nodeProduct;
-                            productes.add(elm);  
-                        }
-                    }
-                
-                    System.out.println(productes);
-                
 
-                    } catch(Exception e) {
-                        // Imprimeix la pila d'errors en cas d'excepció
-                        e.printStackTrace();
-                    }  
-    
+    public static Document readXml(File xml) {
+        try {
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(xml);
+            doc.getDocumentElement().normalize();
+
+            NodeList arrayProducts = doc.getElementsByTagName("product");
+            System.out.println("Products: " + arrayProducts.getLength());
+
+            for (int cnt = 0; cnt < arrayProducts.getLength(); cnt++) {
+                Node nodeProduct = arrayProducts.item(cnt);
+                if (nodeProduct.getNodeType() == Node.ELEMENT_NODE) {
+                    Element elm = (Element) nodeProduct;
+                }
+            }
+
+            return doc;
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return null;
+    }
+
+    public String documentToString(Document doc) throws TransformerException {
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer = transformerFactory.newTransformer();
+        StringWriter writer = new StringWriter();
+        transformer.transform(new DOMSource(doc), new StreamResult(writer));
+        return writer.toString();
+    }
     
         @Override
         public void onOpen(WebSocket conn, ClientHandshake handshake) {
@@ -130,12 +127,18 @@ public class Server extends WebSocketServer {
                         conn.send(msg1.toString());
                         break;
                     case "products":
-                        Gson gson = new Gson();
-                        String json = gson.toJson(productes);
+                        try {
+                            String xmlString = documentToString(productesXml);
 
-                        String msg2 = "{\"message\": " + json + ", \"type\": \"products\"}";
+                            JSONObject msg2 = new JSONObject();
+                            msg2.put("message", xmlString);
+                            msg2.put("type", "products");
 
-                        conn.send(msg2);
+                            conn.send(msg2.toString());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
                         break;
                     case "tags":
                         JSONObject msg3 = new JSONObject();
@@ -256,7 +259,7 @@ public class Server extends WebSocketServer {
             String userDir = System.getProperty("user.dir");
             File xml = new File(userDir, "data/products.xml");
     
-            readXml(xml);
+            productesXml = readXml(xml);
     
         // Verificar si hay un terminal disponible
         Console console = System.console();
