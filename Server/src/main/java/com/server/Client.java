@@ -2,20 +2,48 @@ package com.server;
 
 import static java.lang.System.out;
 
+import java.io.BufferedReader;
+import java.io.Console;
+import java.io.InputStreamReader;
+import java.net.InetSocketAddress;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.java_websocket.WebSocket;
+import org.java_websocket.exceptions.WebsocketNotConnectedException;
+import org.java_websocket.handshake.ClientHandshake;
+import org.java_websocket.server.WebSocketServer;
 import org.jline.reader.EndOfFileException;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
 import org.jline.reader.UserInterruptException;
 import org.json.JSONObject;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.File;
+import java.io.InputStream;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+
 import javafx.application.Platform;
 
 public class Client {
 
     public static UtilsWS wsClient;
+    public static ArrayList<Element> productes;
 
     public static void connectToServer(String host, String port){
-        String protocol = "wss";
+        String protocol = "ws";
         wsClient = UtilsWS.getSharedInstance(protocol + "://" + host);
     
         wsClient.onMessage(Client::wsMessage);
@@ -35,7 +63,10 @@ public class Client {
                     break;
                 case "products":
                     String products = msgObj.getString("message");
-                    System.out.println(products);
+                    Gson gson = new Gson();
+                    productes = gson.fromJson(products, new TypeToken<ArrayList<Element>>() {}.getType());
+                    String productInfo = printProducts();
+                    System.out.println(productInfo);
                     break;
                 case "tags":
                     String tags = msgObj.getString("message");
@@ -43,6 +74,30 @@ public class Client {
                     break;
             }
         }
+
+    private static String printProducts() {
+
+        StringBuilder output = new StringBuilder();
+
+        for (Element producte : productes) {
+            String id = producte.getAttribute("id");
+            String tags = producte.getAttribute("tags");
+            NodeList nodeList0 = producte.getElementsByTagName("name");
+            String name = nodeList0.item(0).getTextContent();
+            NodeList nodeList1 = producte.getElementsByTagName("description");
+            String description = nodeList1.item(0).getTextContent();
+            NodeList nodeList2 = producte.getElementsByTagName("price");
+            String price = nodeList2.item(0).getTextContent();
+            NodeList nodeList3 = producte.getElementsByTagName("image");
+            String image = nodeList3.item(0).getTextContent();
+
+
+            output.append("Product ID: " + id + " | Name: " + name + " | Description: " + description + " | Price: " + price + " | Image: " + image + " | Tags: [" + tags + "]\n" );
+        }
+
+        return output.toString();
+    }
+
     
         private static void wsError(String response) {
             String connectionRefused = "S'ha refusat la connexió";
@@ -70,7 +125,7 @@ public class Client {
                     line = line.trim();
     
                     if (line.equalsIgnoreCase("connect")) {
-                        connectToServer("barretina2.ieti.site", "443");
+                        connectToServer("localhost", "3000");
                         out.println("Connection was succesful.");
                     } else if (line.equalsIgnoreCase("products")) {
                         JSONObject message = new JSONObject();

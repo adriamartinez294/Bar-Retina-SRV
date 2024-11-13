@@ -31,6 +31,9 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 import java.io.InputStream;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 
 public class Server extends WebSocketServer {
 
@@ -127,9 +130,10 @@ public class Server extends WebSocketServer {
                     case "products":
                         JSONObject msg2 = new JSONObject();
 
-                        String products = printProducts();
+                        Gson gson = new Gson();
+                        String json = gson.toJson(productes);
 
-                        msg2.put("message", products);
+                        msg2.put("message", json);
                         msg2.put("type", "products");
 
                         conn.send(msg2.toString());
