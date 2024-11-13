@@ -96,6 +96,8 @@ public class Server extends WebSocketServer {
         @Override
         public void onOpen(WebSocket conn, ClientHandshake handshake) {
             System.out.println("WebSocket client connected: " + conn);
+
+
         }
     
         @Override
@@ -128,15 +130,12 @@ public class Server extends WebSocketServer {
                         conn.send(msg1.toString());
                         break;
                     case "products":
-                        JSONObject msg2 = new JSONObject();
-
                         Gson gson = new Gson();
                         String json = gson.toJson(productes);
 
-                        msg2.put("message", json);
-                        msg2.put("type", "products");
+                        String msg2 = "{\"message\": " + json + ", \"type\": \"products\"}";
 
-                        conn.send(msg2.toString());
+                        conn.send(msg2);
                         break;
                     case "tags":
                         JSONObject msg3 = new JSONObject();
