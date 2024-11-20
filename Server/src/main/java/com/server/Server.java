@@ -155,10 +155,11 @@ public class Server extends WebSocketServer {
                         JSONObject msg4 = new JSONObject();
 
                         String tableMessage = obj.getString("message");
+                        out.println(tableMessage);
                         msg4.put("type", "ready");
                         msg4.put("message", tableMessage);
-
-                        broadcastMessage(msg4.toString(), null);
+                        broadcastMessage(msg4.toString(), conn);
+                        out.println("Message sent");
 
                 }
             }
