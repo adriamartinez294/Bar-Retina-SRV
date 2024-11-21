@@ -150,6 +150,17 @@ public class Server extends WebSocketServer {
 
                         conn.send(msg3.toString());
                         break;
+
+                    case "ready":
+                        JSONObject msg4 = new JSONObject();
+
+                        String tableMessage = obj.getString("message");
+                        out.println(tableMessage);
+                        msg4.put("type", "ready");
+                        msg4.put("message", tableMessage);
+                        broadcastMessage(msg4.toString(), conn);
+                        out.println("Message sent");
+
                 }
             }
         }
