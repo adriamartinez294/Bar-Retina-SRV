@@ -2,16 +2,16 @@ package com.server;
 
 import static java.lang.System.out;
 
-import java.io.BufferedReader;
-import java.io.Console;
-import java.io.InputStreamReader;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.net.InetSocketAddress;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javafx.fxml.FXML;
+import javafx.scene.image.Image;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import org.java_websocket.WebSocket;
 import org.java_websocket.exceptions.WebsocketNotConnectedException;
 import org.java_websocket.handshake.ClientHandshake;
@@ -20,25 +20,28 @@ import org.jline.reader.EndOfFileException;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
 import org.jline.reader.UserInterruptException;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.w3c.dom.*;
 import org.json.JSONObject;
+
+import javax.imageio.ImageIO;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
-import java.io.StringReader;
+
 import org.xml.sax.InputSource;
 
-import java.io.File;
-import java.io.StringWriter;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.dom.DOMSource;
 
+
 public class Server extends WebSocketServer {
 
+    private String base64Image;
     private Map<WebSocket, String> clients;
 
     public static Document productesXml;
@@ -160,7 +163,51 @@ public class Server extends WebSocketServer {
                         msg4.put("message", tableMessage);
                         broadcastMessage(msg4.toString(), null);
                         out.println("Message sent");
+                        break;
 
+                    case "productswithimage":
+                        try {
+                            // Construir un JSON con los productos y las imágenes en Base64
+                            JSONObject msg2 = new JSONObject();
+                            msg2.put("type", "productswithimage");
+
+                            NodeList arrayProducts = productesXml.getElementsByTagName("product");
+                            JSONArray productsWithImage = new JSONArray();
+
+                            for (int i = 0; i < arrayProducts.getLength(); i++) {
+                                Node nodeProduct = arrayProducts.item(i);
+                                if (nodeProduct.getNodeType() == Node.ELEMENT_NODE) {
+                                    Element product = (Element) nodeProduct;
+
+                                    JSONObject productJson = new JSONObject();
+                                    productJson.put("id", product.getAttribute("id"));
+                                    productJson.put("tags", product.getAttribute("tags"));
+                                    productJson.put("name", getTagValue("name", product));
+                                    productJson.put("price", getTagValue("price", product));
+                                    productJson.put("description", getTagValue("description", product));
+
+                                    // Procesar la imagen y convertir a Base64
+                                    String imageFileName = getTagValue("image", product);
+                                    File imageFile = new File(System.getProperty("user.dir") + "/data/imgs/" + imageFileName);
+                                    if (imageFile.exists()) {
+                                        String base64Image = convertImageToBase64(imageFile);
+                                        productJson.put("image", base64Image);
+                                    } else {
+                                        productJson.put("image", "Image not found");
+                                    }
+                                    productsWithImage.put(productJson);
+                                }
+                            }
+                            out.println("Enviando datos....");
+                            // Agregar productos al mensaje
+                            msg2.put("message", productsWithImage);
+
+                            // Enviar el mensaje al cliente
+                            conn.send(msg2.toString());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
                 }
             }
         }
@@ -313,4 +360,37 @@ public class Server extends WebSocketServer {
             System.out.println("Server running in non-interactive mode.");
         }
     }
+
+    public static String convertImageToBase64(File imageURL) {
+        try {
+            // Leer la imagen desde el archivo (puede ser .jpg o .png)
+            BufferedImage bufferedImage = ImageIO.read(imageURL);
+
+            // Crear un ByteArrayOutputStream para almacenar los bytes de la imagen
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+            // Escribir la imagen en el ByteArrayOutputStream (puede ser .png o .jpg)
+            String formatName = imageURL.getName().toLowerCase().endsWith(".png") ? "png" : "jpg";
+            ImageIO.write(bufferedImage, formatName, outputStream);
+
+            // Obtener el arreglo de bytes
+            byte[] imageBytes = outputStream.toByteArray();
+
+            // Codificar los bytes a Base64
+            return Base64.getEncoder().encodeToString(imageBytes);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private static String getTagValue(String tag, Element element) {
+        NodeList nodeList = element.getElementsByTagName(tag);
+        if (nodeList.getLength() > 0) {
+            return nodeList.item(0).getTextContent();
+        }
+        return null;
+    }
+
 }
