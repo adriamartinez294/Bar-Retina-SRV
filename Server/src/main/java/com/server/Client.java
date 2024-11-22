@@ -143,7 +143,7 @@ public class Client {
                 line = line.trim();
 
                 if (line.equalsIgnoreCase("connect")) {
-                    connectToServer("barretina2.ieti.site", "443");
+                    connectToServer("barretina22.ieti.site", "443");
                     out.println("Connection was succesful.");
                 } else if (line.equalsIgnoreCase("products")) {
                     JSONObject message = new JSONObject();

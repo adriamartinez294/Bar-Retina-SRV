@@ -36,7 +36,6 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.dom.DOMSource;
-import org.w3c.dom.Document;
 
 public class Server extends WebSocketServer {
 
@@ -93,13 +92,14 @@ public class Server extends WebSocketServer {
         @Override
         public void onOpen(WebSocket conn, ClientHandshake handshake) {
             System.out.println("WebSocket client connected: " + conn);
-
+            clients.put(conn, conn.getRemoteSocketAddress().toString());
 
         }
     
         @Override
         public void onClose(WebSocket conn, int code, String reason, boolean remote) {
             System.out.println("WebSocket client disconnected: " + conn);
+            clients.remove(conn);
         }
     
         @Override
@@ -158,7 +158,7 @@ public class Server extends WebSocketServer {
                         out.println(tableMessage);
                         msg4.put("type", "ready");
                         msg4.put("message", tableMessage);
-                        broadcastMessage(msg4.toString(), conn);
+                        broadcastMessage(msg4.toString(), null);
                         out.println("Message sent");
 
                 }
