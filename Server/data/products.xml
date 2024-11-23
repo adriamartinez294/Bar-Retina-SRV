@@ -292,7 +292,7 @@
         <image>dish006.jpg</image> 
     </product>
     <product id="dish007" tags="main, fish"> 
-        <name>Grilled Hake with Asparagus and Steamed Carrots</name> 
+        <name>Grilled Hake with Asparagus</name>
         <price>14.00</price> 
         <description>Grilled hake served with asparagus and steamed carrots</description> 
         <image>dish007.jpg</image> 
